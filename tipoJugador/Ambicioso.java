@@ -1,12 +1,13 @@
-package estrategiaJugador;
+package tipoJugador;
 
 import java.util.ArrayList;
 
-import mazo_cartas.Carta;
+import cartas_mazo.Carta;
 
-public class Ambicioso extends Estrategia {
+public class Ambicioso extends TipoJugador {
 	public String getAtributoSeleccionado(Carta c){
 		ArrayList<String> opciones = c.getListOpciones();
+		
 		String selecc = opciones.get(0);
 		int aux = c.getValorAtributoSeleccionado(selecc);
 		
@@ -17,6 +18,7 @@ public class Ambicioso extends Estrategia {
 				aux = valor;
 			}
 		}
+		
 		return selecc;
 	}
 }

@@ -1,5 +1,5 @@
-package juegoDeCartas_v2;
-import mazo_cartas.*;
+package juego_main;
+import cartas_mazo.*;
 
 public class Juego {
 	private Mazo mazoGeneral;
@@ -19,6 +19,7 @@ public class Juego {
 		maxRondas = rond;
 		nroRondas = 1;
 	}
+	
 	/*------------------------------------------JUEGO---------------------------------------------------------*/
 	public void jugar() {
 		repartir();
@@ -48,6 +49,7 @@ public class Juego {
 			}
 		}
 	}
+	
 	/*------------------------------------COMPARAR Y ASIGNAR GANADOR-------------------------------*/
 	public void comparar() {
 		String selecc = obtenerComparador();
@@ -78,6 +80,7 @@ public class Juego {
 		
 		nroRondas++;
 	}
+	
 //------------------------------------------OBTENER EL ATRIBUTO A COMPARAR --------------------------------------------------
 	private String obtenerComparador() {
 		String selecc;
@@ -91,10 +94,11 @@ public class Juego {
 			return selecc;
 		}
 	}
+	
 	//----------------------------------IMPRIMIR CARTAS Y VALORES ---------------------------------------------------------
 	public void imprimirMensajes(Carta c, String nom, String at) {
 		if(c.hayPocima()) {
-			Mensajes.mostrarCartaPocima(at, nom, c.getNombre(), c.getNombrePocima(),c.getValorSinAlterar(at), c.getValorAtributoSeleccionado(at));
+			Mensajes.mostrarCartaPocima(at, nom, c.getNombre(), c.getNombrePocima(),c.getValorAtributo(at), c.getValorAtributoSeleccionado(at));
 		}else {
 			Mensajes.mostrarCarta(at, nom, c.getNombre(), c.getValorAtributoSeleccionado(at));
 		}

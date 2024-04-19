@@ -1,4 +1,4 @@
-package mazo_cartas;
+package cartas_mazo;
 import java.util.ArrayList;
 import atributos.*;
 import pocimas.*;
@@ -20,7 +20,7 @@ public class Carta{
 		addAtributo(a4);
 		addAtributo(a5);
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -30,7 +30,7 @@ public class Carta{
 			atributos.add(aa);
 		}
 	}
-	
+
 	public boolean existeAtributo(String nom) {					//VERIFICA QUE EL NUEVO ATRIBUTO NO SE REPITA
 		for(int i = 0; i< atributos.size(); i++) {
 			String aux = atributos.get(i).getNombre();
@@ -42,20 +42,24 @@ public class Carta{
 	}
 
 	public void addPocima(Pocima p) {
-		pocima = p;
+		if(!hayPocima()) {
+			pocima = p;			
+		}
 	}
+
 	public boolean hayPocima() {
 		if(pocima != null) {
 			return true;
 		}
 		return false;
 	}
+
 	public String getNombrePocima() {
 		return pocima.getNombre();
 	}
-	
+
 	private int aplicarPocima(int cc, String nom) {
-			return this.pocima.aplicar(cc, nom);
+		return this.pocima.aplicar(cc, nom);
 	}
 
 	public boolean verificar(Carta cc) {
@@ -67,6 +71,7 @@ public class Carta{
 			ArrayList<String> otraCarta = cc.getListOpciones();				//LISTADO DE LA OTRA CARTA
 			return estaCarta.containsAll(otraCarta) && otraCarta.containsAll(estaCarta);	//DOBLE COMPARACION DE LISTADOS
 		}catch(Exception exc) {
+			System.out.println(exc);
 			return false;
 		}
 	}
@@ -91,15 +96,15 @@ public class Carta{
 		}
 		return aux.getValor();
 	}
-	
-	public int getValorSinAlterar(String nombre) {
+
+	public int getValorAtributo(String nombre) {
 		Atributo aux = getAtributo(nombre);
 		return aux.getValor();
 	}
 
 	public ArrayList<String> getListOpciones(){
 		ArrayList<String> aux = new ArrayList<>();
-		for(int i= 0; i< atributos.size(); i++) {
+		for(int i= 0; i< cantAtributos(); i++) {
 			String name = atributos.get(i).getNombre();
 			aux.add(name);
 		}

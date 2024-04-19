@@ -12,7 +12,7 @@ public class PocimaFortalecedora extends Pocima {
 
 	@Override
 	public int aplicar(int cc, String nom) {
-		int res = (int)(cc * porcentaje) / 100;
+		int res = (int)(cc * porcentaje) / 100;			//CALCULO DE PORCENTAJE
 		int aux = cc + res;
 		return aux;
 	}

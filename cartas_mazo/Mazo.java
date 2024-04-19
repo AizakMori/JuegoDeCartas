@@ -1,7 +1,8 @@
-package mazo_cartas;
+package cartas_mazo;
 import java.util.ArrayList;
+
+import juego_main.*;
 import pocimas.*;
-import juegoDeCartas_v2.*;
 
 public class Mazo {
 	private ArrayList<Carta> cartas;
@@ -21,22 +22,22 @@ public class Mazo {
 		}
 	}
 	
-	public void addPocima(Pocima p) {
-		pocimas.add(p);
+	public void addPocima(Pocima p) {		
+			pocimas.add(p);
 	}
 	
-	public Carta repartirCarta() {					//REPARTE A PARTIR DE LA CARTA "EN LA PARTE SUPERIOR DEL MAZO"
+	public Carta repartirCarta() {							//REPARTE A PARTIR DE LA CARTA "EN LA PARTE SUPERIOR DEL MAZO"
 		int cant = cartas.size()-1;
 		Carta aux = cartas.get(cant);
 		cartas.remove(cant);
-		if(pocimas.size()!=0) {						//REPARTIR SI HAY POCIMAS EN LA LIST<>
+		if(pocimas.size()!=0) {								//REPARTIR SI HAY POCIMAS EN LA LIST<>
 			int i = randomizador(2);				
-			if(i == 0) {							//QUE HAYA 50% DE PROBABILIDADES DE QUE SE AGREGUE UNA POCIMA(""ALEATORIO"")
-			int indx = randomizador(pocimas.size());	
-			Pocima pocimaAux = pocimas.get(indx);	//TOMO UNA POCIMA AL AZAR DE LA LIST<>
-			aux.addPocima(pocimaAux);
-			pocimas.remove(indx);
-			return aux;
+			if(i == 0) {									//QUE HAYA 50% DE PROBABILIDADES DE QUE SE AGREGUE UNA POCIMA(""ALEATORIO"")
+				int indx = randomizador(pocimas.size());
+				Pocima pocimaAux = pocimas.get(indx);		//TOMO UNA POCIMA AL AZAR DE LA LIST<>
+				aux.addPocima(pocimaAux);
+				pocimas.remove(indx);
+				return aux;
 			}
 		}
 		return aux;
@@ -52,7 +53,7 @@ public class Mazo {
 		return aux;
 	}
 	
-	public Carta verCarta() {						//PARA EL JUGADOR AMBICIOSO, VER LA CARTA SIN ENTREGARLA PARA VERIFICAR EL ATRIBUTO MAS ALTO
+	public Carta verCarta() {
 		Carta aux = cartas.get(0);
 		return aux;
 	}
