@@ -1,16 +1,20 @@
-package Jugadores;
+package juegoDeCartas_v2;
 import java.util.ArrayList;
-
-import herramientas.Mensajes;
+import estrategiaJugador.*;
 import mazo_cartas.*;
 
 public class Jugador {
 	private String nombre;
 	private Mazo mazo;
-	private boolean ganador;
+	private Estrategia estrategia;
+	private boolean ganador;		//UTILIZO ESTA VARIABLE PARA VERIFICAR QUIEN GANO LA RONDA Y SABER QUIEN TIENE EL TURNO
 	
 	public Jugador(String nom) {
+		this(nom, new Timbero());
+	}
+	public Jugador(String nom, Estrategia e) {
 		nombre = nom;
+		setEstrategia(e);
 		mazo = new Mazo();
 		setGanador(false);
 	}
@@ -21,12 +25,12 @@ public class Jugador {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public void setEstrategia(Estrategia e) {
+		this.estrategia = e;
+	}
 	
 	public String atributoSeleccionado() {
-		ArrayList<String> atributos = getOpciones();
-		int res = (int)(Math.random() * (atributos.size()));
-		String selecc = atributos.get(res);
-		return selecc;
+		 return this.estrategia.getAtributoSeleccionado(this.verPrimerCarta());
 	}
 	
 	public ArrayList<String> getOpciones(){
@@ -56,10 +60,6 @@ public class Jugador {
 	
 	public int cantCartas() {
 		return mazo.cantCartas();
-	}
-	
-	public void finalDelMazo(Carta c){
-		mazo.ultimoLugar(c);
 	}
 
 }

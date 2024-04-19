@@ -1,10 +1,5 @@
 package pocimas;
 
-import java.util.ArrayList;
-
-import atributos.Atributo;
-import mazo_cartas.Carta;
-
 public class PocimaDebilitadora extends Pocima {
 	private int porcentaje;
 	public PocimaDebilitadora(String nom) {
@@ -16,13 +11,10 @@ public class PocimaDebilitadora extends Pocima {
 	}
 
 	@Override
-	public void aplicar(Carta c) {
-		ArrayList<Atributo> opciones = c.getListAtributos();
-		for(int i = 0; i < opciones.size(); i++) {
-			Atributo aux = opciones.get(i);
-			int res = (int)(aux.getValor() * porcentaje) / 100;
-			aux.setValor((aux.getValor() - res));
-		}
+	public int aplicar(int cc, String ss) {
+		int res = (int)(cc * porcentaje) / 100;
+		int aux = cc - res;
+		return aux;
 	}
 	public void setPorcentaje(int num) {
 		this.porcentaje = num;

@@ -1,7 +1,6 @@
 package mazo_cartas;
 import java.util.ArrayList;
 import atributos.*;
-import herramientas.*;
 import pocimas.*;
 
 public class Carta{
@@ -21,14 +20,25 @@ public class Carta{
 		addAtributo(a4);
 		addAtributo(a5);
 	}
+	
 	public String getNombre() {
 		return nombre;
 	}
 
 	public void addAtributo(Atributo aa) {
-		if(!aa.getNombre().isBlank() && aa.getValor() >= 0) {
+		if(!aa.getNombre().isBlank() && aa.getValor() >= 0 && existeAtributo(aa.getNombre())) {
 			atributos.add(aa);
 		}
+	}
+	
+	public boolean existeAtributo(String nom) {					//VERIFICA QUE EL NUEVO ATRIBUTO NO SE REPITA
+		for(int i = 0; i< atributos.size(); i++) {
+			String aux = atributos.get(i).getNombre();
+			if(aux.equals(nom)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void addPocima(Pocima p) {
@@ -40,23 +50,22 @@ public class Carta{
 		}
 		return false;
 	}
+	public String getNombrePocima() {
+		return pocima.getNombre();
+	}
 	
-	public void aplicarPocima(String mnsj) {
-		if(hayPocima()) {
-			pocima.aplicar(this);
-			Mensajes.mostrarPocima(pocima.getNombre(), this.getAtributoSeleccionado(mnsj));
-			pocima = null;			
-		}
+	private int aplicarPocima(int cc, String nom) {
+			return this.pocima.aplicar(cc, nom);
 	}
 
 	public boolean verificar(Carta cc) {
 		try {
-			if(cc.cantAtributos() != this.cantAtributos()) {
+			if(cc.cantAtributos() != this.cantAtributos()) {				//VERIFICAR SI TIENEN LA MISMA CANTIDAD DE ATRIBUTOS
 				return false;				
 			}
-			ArrayList<String> estaCarta = this.getListOpciones();
-			ArrayList<String> otraCarta = cc.getListOpciones();
-			return estaCarta.containsAll(otraCarta) && otraCarta.containsAll(estaCarta);
+			ArrayList<String> estaCarta = this.getListOpciones();			//LISTADO DE ESTA CARTA
+			ArrayList<String> otraCarta = cc.getListOpciones();				//LISTADO DE LA OTRA CARTA
+			return estaCarta.containsAll(otraCarta) && otraCarta.containsAll(estaCarta);	//DOBLE COMPARACION DE LISTADOS
 		}catch(Exception exc) {
 			return false;
 		}
@@ -75,7 +84,15 @@ public class Carta{
 		return null;
 	}
 
-	public int getAtributoSeleccionado(String nombre) {
+	public int getValorAtributoSeleccionado(String nombre) {
+		Atributo aux = getAtributo(nombre);
+		if(hayPocima()) {
+			return this.aplicarPocima(aux.getValor(), nombre);
+		}
+		return aux.getValor();
+	}
+	
+	public int getValorSinAlterar(String nombre) {
 		Atributo aux = getAtributo(nombre);
 		return aux.getValor();
 	}

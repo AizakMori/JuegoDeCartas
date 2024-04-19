@@ -1,6 +1,4 @@
 package pocimas;
-import mazo_cartas.*;
-
 public abstract class Pocima {
 	private String nombre;
 	public Pocima(String nom) {
@@ -9,5 +7,5 @@ public abstract class Pocima {
 	public String getNombre() {
 		return nombre;
 	}
-	public abstract void aplicar(Carta c);
+	public abstract int aplicar(int cc, String ss);
 }

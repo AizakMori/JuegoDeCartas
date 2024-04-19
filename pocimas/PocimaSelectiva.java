@@ -1,8 +1,5 @@
 package pocimas;
 
-import mazo_cartas.*;
-import atributos.*;
-
 public class PocimaSelectiva extends Pocima {
 	private int porcentaje;
 	private String atributoSelec;
@@ -13,10 +10,13 @@ public class PocimaSelectiva extends Pocima {
 	}
 
 	@Override
-	public void aplicar(Carta c) {
-		Atributo aux = c.getAtributo(atributoSelec);
-		int res = (int)(aux.getValor() * porcentaje) / 100;
-		aux.setValor((aux.getValor() + res));
+	public int aplicar(int cc, String ss) {
+		if(ss.equals(atributoSelec)) {
+			int res = (int)(cc * porcentaje) / 100;
+			int aux = cc + res;
+			return aux;
+		}
+		return cc;
 	}
 	
 	public void setPorcentaje(int num) {

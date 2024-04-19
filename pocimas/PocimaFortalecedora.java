@@ -1,9 +1,5 @@
 package pocimas;
 
-import java.util.ArrayList;
-import atributos.*;
-import mazo_cartas.*;
-
 public class PocimaFortalecedora extends Pocima {
 	private int porcentaje;
 	public PocimaFortalecedora(String nom) {
@@ -15,13 +11,10 @@ public class PocimaFortalecedora extends Pocima {
 	}
 
 	@Override
-	public void aplicar(Carta c) {
-		ArrayList<Atributo> opciones = c.getListAtributos();
-		for(int i = 0; i < opciones.size(); i++) {
-			Atributo aux = opciones.get(i);
-			int res = (int)(aux.getValor() * porcentaje) / 100;
-			aux.setValor((aux.getValor() + res));
-		}
+	public int aplicar(int cc, String nom) {
+		int res = (int)(cc * porcentaje) / 100;
+		int aux = cc + res;
+		return aux;
 	}
 
 }

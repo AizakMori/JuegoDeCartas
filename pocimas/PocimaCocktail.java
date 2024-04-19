@@ -1,8 +1,6 @@
 package pocimas;
 import java.util.ArrayList;
 
-import mazo_cartas.*;
-
 public class PocimaCocktail extends Pocima {
 	private ArrayList<Pocima> pocimas;
 	public PocimaCocktail() {
@@ -14,10 +12,12 @@ public class PocimaCocktail extends Pocima {
 	}
 
 	@Override
-	public void aplicar(Carta c) {
+	public int aplicar(int cc, String ss) {
+		int res = 0;
 		for(Pocima p: pocimas) {
-			p.aplicar(c);
+			res+= p.aplicar(cc, ss);
 		}
+		return res;
 	}
 	public void addPocima(Pocima p) {
 		if(p != null) {

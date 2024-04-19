@@ -1,6 +1,4 @@
-package juegoDeCartas_v1;
-import Jugadores.*;
-import herramientas.*;
+package juegoDeCartas_v2;
 import mazo_cartas.*;
 
 public class Juego {
@@ -13,6 +11,7 @@ public class Juego {
 	public Juego(Mazo m1, Jugador j1, Jugador j2) {
 		this(m1, j1, j2, 15);
 	}
+	
 	public Juego(Mazo m1, Jugador j1, Jugador j2, int rond) {
 		mazoGeneral = m1;
 		this.j1 = j1;
@@ -39,7 +38,8 @@ public class Juego {
 	}
 
 	/*------------------------------------REPARTIR-----------------------------------------------------*/
-	private void repartir() {	
+	
+	public void repartir() {	
 		Mensajes.imprimirRepartir();
 		while(mazoGeneral.quedanCartas()) {
 			j1.addCarta(mazoGeneral.repartirCarta());	
@@ -51,41 +51,37 @@ public class Juego {
 	/*------------------------------------COMPARAR Y ASIGNAR GANADOR-------------------------------*/
 	public void comparar() {
 		String selecc = obtenerComparador();
-		
 		Carta cJ1 = j1.jugarCarta();
-		int comp1 = cJ1.getAtributoSeleccionado(selecc);
-		Mensajes.mostrarCarta(selecc, j1.getNombre(), cJ1.getNombre(), comp1);
-		cJ1.aplicarPocima(selecc);
-		
 		Carta cJ2 = j2.jugarCarta();
-		int comp2 = cJ2.getAtributoSeleccionado(selecc);
-		Mensajes.mostrarCarta(selecc, j2.getNombre(), cJ2.getNombre(), comp2);
-		cJ2.aplicarPocima(selecc);
+		int comp1 = cJ1.getValorAtributoSeleccionado(selecc);
+		int comp2 = cJ2.getValorAtributoSeleccionado(selecc);
+		imprimirMensajes(cJ1, j1.getNombre(), selecc);
+		imprimirMensajes(cJ2, j2.getNombre(), selecc);
 		
 		if (comp1 > comp2) {
 			j1.setGanador(true);
 			j2.setGanador(false);
-			j1.finalDelMazo(cJ1);
-			j1.finalDelMazo(cJ2);
+			j1.addCarta(cJ1);
+			j1.addCarta(cJ2);
 			Mensajes.ganadorRonda(j1.getNombre());
 		} else if (comp2 > comp1) {
 			j2.setGanador(true);
 			j1.setGanador(false);
-			j2.finalDelMazo(cJ2);
-			j2.finalDelMazo(cJ1);
+			j2.addCarta(cJ2);
+			j2.addCarta(cJ1);
 			Mensajes.ganadorRonda(j2.getNombre());
 		} else {
-			j1.finalDelMazo(cJ1);
-			j2.finalDelMazo(cJ2);
+			j1.addCarta(cJ1);
+			j2.addCarta(cJ2);
 			Mensajes.empate();
 		}
 		
 		nroRondas++;
 	}
-
+//------------------------------------------OBTENER EL ATRIBUTO A COMPARAR --------------------------------------------------
 	private String obtenerComparador() {
 		String selecc;
-		if(j1.isGanador() == true) {
+		if(nroRondas == 1 || j1.isGanador() == true) {
 			selecc = j1.atributoSeleccionado();
 			Mensajes.atributoSelec(j1.getNombre(), selecc);
 			return selecc;
@@ -93,6 +89,14 @@ public class Juego {
 			selecc = j2.atributoSeleccionado();
 			Mensajes.atributoSelec(j2.getNombre(), selecc);
 			return selecc;
+		}
+	}
+	//----------------------------------IMPRIMIR CARTAS Y VALORES ---------------------------------------------------------
+	public void imprimirMensajes(Carta c, String nom, String at) {
+		if(c.hayPocima()) {
+			Mensajes.mostrarCartaPocima(at, nom, c.getNombre(), c.getNombrePocima(),c.getValorSinAlterar(at), c.getValorAtributoSeleccionado(at));
+		}else {
+			Mensajes.mostrarCarta(at, nom, c.getNombre(), c.getValorAtributoSeleccionado(at));
 		}
 	}
 }

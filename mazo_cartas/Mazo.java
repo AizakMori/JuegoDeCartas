@@ -1,7 +1,7 @@
 package mazo_cartas;
 import java.util.ArrayList;
-import pocimas.Pocima;
-import herramientas.*;
+import pocimas.*;
+import juegoDeCartas_v2.*;
 
 public class Mazo {
 	private ArrayList<Carta> cartas;
@@ -29,11 +29,11 @@ public class Mazo {
 		int cant = cartas.size()-1;
 		Carta aux = cartas.get(cant);
 		cartas.remove(cant);
-		if(pocimas.size()!=0) {						//REPARTIR SI HAY POCIMAS EN EL ARRAY
+		if(pocimas.size()!=0) {						//REPARTIR SI HAY POCIMAS EN LA LIST<>
 			int i = randomizador(2);				
-			if(i == 0) {							//QUE HAYA 50% DE PROBABILIDADES DE QUE SE AGREGUE UNA POCIMA(" ALEATORIO ")
-			int indx = randomizador(pocimas.size());
-			Pocima pocimaAux = pocimas.get(indx);
+			if(i == 0) {							//QUE HAYA 50% DE PROBABILIDADES DE QUE SE AGREGUE UNA POCIMA(""ALEATORIO"")
+			int indx = randomizador(pocimas.size());	
+			Pocima pocimaAux = pocimas.get(indx);	//TOMO UNA POCIMA AL AZAR DE LA LIST<>
 			aux.addPocima(pocimaAux);
 			pocimas.remove(indx);
 			return aux;
@@ -64,10 +64,6 @@ public class Mazo {
 	public int cantCartas() {						//VERIFICA LA CANTIDAD DE CARTAS RESTANTES 
 		int aux = cartas.size();
 		return aux;
-	}
-	
-	public void ultimoLugar(Carta c) {				//COLOCA LA CARTA EN EL ULTIMO LUGAR EN CASO DE EMPATE
-		cartas.add(cartas.size(), c);
 	}
 	
 	public int randomizador(int i) {				//LO UTILIZO PARA NO REPETIR CODIGO EN EL REPARTIR
